@@ -1,3 +1,5 @@
+# adapted from here: https://stackoverflow.com/a/32622652/1865495
+
 CC=dot
 CFLAGS=-Tpng
 
