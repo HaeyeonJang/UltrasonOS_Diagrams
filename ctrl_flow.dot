@@ -1,0 +1,45 @@
+digraph ctrl_flow {
+    graph [label="UltrasonOS STM32 Control Flow", labelloc=t, fontsize=30];
+
+	//rankdir=LR;
+	rankdir=TB;
+	node [shape=box];
+
+	init[label="initialization code"];
+	start[label="wait for start packet"];
+
+	adc[label="read ADC data"];
+	encoder[label="read encoder angle"];
+	IMU[label="read IMU data"];
+
+	serialize[label="serialize data"];
+	checksum[label="calculate\nchecksum"];
+	sendbuf[label="send buffer"]
+	UDP[label="send UDP packet"];
+	repeat[label="repeat 10000 times"];
+	scan_done[label="finished 2D scan"];
+
+init -> start;
+start -> adc;
+//start -> encoder;
+//start -> IMU;
+adc -> encoder;
+encoder -> IMU;
+{rank = same; adc, encoder, IMU};
+
+adc -> serialize;
+encoder -> serialize;
+IMU -> serialize;
+
+serialize -> checksum;
+serialize -> sendbuf;
+{rank = same; serialize, checksum};
+checksum -> sendbuf;
+sendbuf -> UDP;
+
+UDP -> repeat;
+repeat -> adc;
+repeat -> scan_done;
+{rank=same; repeat; scan_done}
+scan_done -> start;
+}

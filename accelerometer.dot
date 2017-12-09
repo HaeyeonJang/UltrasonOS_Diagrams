@@ -1,0 +1,10 @@
+digraph acclerometer {
+	rankdir=LR;
+
+	a[label="a + ∆a"];
+	int[label="∫∫"];
+	x[label="x + ∆at²"];
+
+	a -> int;
+	int -> x;
+}

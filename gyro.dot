@@ -1,0 +1,13 @@
+digraph gyro {
+	rankdir=LR;
+
+	gyro[label = "ω + ∆ω"];
+	int[label="∫"];
+	angle[label="θ + ∆ωt"];
+	angle_correct[label="θ"];
+
+	gyro -> int;
+	int -> angle;
+	angle -> angle_correct;
+	magnetometer -> angle_correct;
+}
